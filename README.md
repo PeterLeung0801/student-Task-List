@@ -1,7 +1,6 @@
-Student Task To-Do List System - README
+# Student Task To-Do List System - README
 
-Project Overview
-
+## Project Overview
 
 This Python program helps students track tasks such as homework, assignments, and exam preparation. It provides a centralized task management system with a clear table display, enabling users to add, complete, edit, delete, and view tasks conveniently.
 
@@ -11,29 +10,23 @@ Newly added, completed, or edited tasks are immediately saved and displayed.
 Supports input validation and retry for invalid IDs or dates.
 Automatic tasks.json file creation and persistence.
 
-
-Requirements
+## Requirements
 
 Python 3.6.5 or above
 Standard Python modules: json, os, datetime
 Runs on Windows, macOS, or Linux terminals
 
-
-How to Run
+## How to Run
 
 1. Save the program as student_todo_list.py.
 2. Make sure tasks.json is in the same folder (it will be created automatically if missing).
 3. Open a terminal/command prompt.
 4. Navigate to the folder containing student_todo_list.py.
-
-
-5. Run the program:
-python student_todo_list.py
-
-
+5. Run the program: python student_todo_list.py
 6. On start, the program shows the most recent task (highest ID) in a table.
 7. Main menu options:
 
+---
 
 任務待辦清單選單：
 1. 新增 - 新增任務與截止日期
@@ -42,13 +35,13 @@ python student_todo_list.py
 4. 查看所有任務 - 顯示所有任務表格
 5. 退出 - 離開程式
 
+---
 
 Enter your choice (1-5).
 Tables are displayed for all task lists.
 Invalid inputs prompt retry until valid or cancel with Enter.
 
-
-Test Cases
+## Test Cases
 
 1. Add Task
 Input: 1 → COMP8080SEF Final Project → 2025-11-29
@@ -82,8 +75,7 @@ Output: Returns to main menu.
 Input: 5
 Output: Program terminates.
 
-
-Invalid Test Cases
+## Invalid Test Cases
 
 1. Invalid Deadline Format
 Input: 1 → task name → 2025-13-18
@@ -97,8 +89,7 @@ Output: 找不到該任務或已完成，請重新輸入！ (loops until valid o
 Input: invalid number in main menu (e.g., 6) or edit menu (e.g., 5)
 Output: 請輸入 1-5 的數字！ 或 請輸入 1-4 的數字
 
-
-Notes
+## Notes
 
 Task IDs are 3-digit numbers starting from 001.
 Tasks are stored in tasks.json and persist between program runs.
@@ -107,5 +98,6 @@ Clearing the screen on each menu ensures a clean interface.
 Users can retry entering task IDs if invalid.
 All updates (add, complete, edit, delete) are immediately saved and displayed in table format.
 
+---
 
-Last Updated: November 23, 2025
+### Last Updated: November 23, 2025
