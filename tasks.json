@@ -4,5 +4,11 @@
         "task": "COMP8080SEF Final Project",
         "deadline": "2025-11-29",
         "status": "未完成"
+    },
+    {
+        "id": "003",
+        "task": "MidTerm",
+        "deadline": "2025-11-04",
+        "status": "已完成"
     }
 ]
