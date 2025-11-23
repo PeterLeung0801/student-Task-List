@@ -43,42 +43,42 @@ Invalid inputs prompt retry until valid or cancel with Enter.
 
 ## Test Cases
 
-1. Add Task
+### 1. Add Task
 Input: 1 → COMP8080SEF Final Project → 2025-11-29
 <br>
 Output: Table displaying the newly added task.
 
-2. View All Tasks
+### 2. View All Tasks
 Input: 4
 <br>
 Output: Table of all tasks, sorted by ID.
 
-3. Complete Task
+### 3. Complete Task
 Input: 2 → select task ID (e.g., 002)
 <br>
 Output: Table showing task marked as completed.
 
-4. Edit Task Name
+### 4. Edit Task Name
 Input: 3 → task ID (e.g., 002) → 1 → new name
 <br>
 Output: Table showing updated task name.
 
-5. Edit Task Deadline
+### 5. Edit Task Deadline
 Input: 3 → task ID → 2 → new date
 <br>
 Output: Table showing updated deadline.
 
-6. Delete Task
+### 6. Delete Task
 Input: 3 → task ID → 3 → confirm y
 <br>
 Output: Table confirming deletion.
 
-7. Cancel Edit
+### 7. Cancel Edit
 Input: 3 → task ID → 4 or Enter
 <br>
 Output: Returns to main menu.
 
-8. Exit Program
+### 8. Exit Program
 Input: 5
 <br>
 Output: Program terminates.
