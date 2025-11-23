@@ -1,5 +1,9 @@
 # 學生任務待辦清單
 # 作者：Leung Kam Chung Peter
+# 版本：1.0
+# 功能：新增、標記完成、編輯/刪除、查看任務
+# 日期：2024 年 11 月 29 日
+
 
 import json
 import os
@@ -7,11 +11,11 @@ from datetime import datetime
 
 TASKS_FILE = "tasks.json"
 
-# ================ 清屏函式 ================
+# ================ 清屏 ================
 def clear():
     os.system("cls" if os.name == "nt" else "clear")
 
-# ================ 表格顯示函式 ================
+# ================ 表格 ================
 def display_tasks_table(tasks, title="任務列表"):
     if not tasks:
         print("\n沒有任務。\n")
@@ -26,7 +30,7 @@ def display_tasks_table(tasks, title="任務列表"):
 
     print("═" * 90 + "\n")
 
-# ================ 主程式開始 ================
+# ================ 主程式 ================
 clear()
 print("═" * 58)
 print("    學生任務待辦清單    ".center(50, "█"))
@@ -39,7 +43,7 @@ if os.path.exists(TASKS_FILE):
 else:
     tasks = []
 
-# 開頭顯示最近任務（最大 ID）
+# 開頭顯示最近一次任務
 if len(tasks) == 0:
     print("清單中沒有任務")
 else:
@@ -59,7 +63,7 @@ while True:
     print("5. 退出")
     choice = input("\n請選擇 (1-5): ").strip()
 
-    # ────── 1. 新增任務 ──────
+    # 1. 新增任務
     if choice == "1":
         clear()
         print("1. 新增任務 （直接按 Enter 即可取消）\n")
@@ -103,7 +107,7 @@ while True:
             except ValueError:
                 print("日期格式錯誤！請使用 YYYY-MM-DD 格式")
 
-    # ────── 2. 標記完成 ──────
+    # 2. 標記完成
     elif choice == "2":
         clear()
         pending = [t for t in tasks if t["status"] == "未完成"]
@@ -131,12 +135,12 @@ while True:
                     json.dump(tasks, f, ensure_ascii=False, indent=4)
                 print(f"\n任務 {tid} 已標記為完成！\n")
                 display_tasks_table([target_task], "已更新任務")
-                break  # 完成後跳出迴圈
+                break
             else:
                 clear()
                 print("找不到該任務或已完成，請重新輸入！")
 
-    # ────── 3. 編輯或刪除 ──────
+    # 3. 編輯或刪除
     elif choice == "3":
         clear()
         if not tasks:
@@ -148,9 +152,9 @@ while True:
             tid = input("輸入要編輯/刪除的任務編號（按 Enter 取消）：").strip()
             if tid == "":
                 print("已取消操作\n")
-                break  # 取消就跳出迴圈
+                break
 
-            # 嘗試找到任務
+            # 嘗試找任務
             target_task = None
             for task in tasks:
                 if task["id"] == tid:
@@ -199,12 +203,12 @@ while True:
 
                 with open(TASKS_FILE, "w", encoding="utf-8") as f:
                     json.dump(tasks, f, ensure_ascii=False, indent=4)
-                break  # 完成後跳出迴圈
+                break
             else:
                 clear()
                 print("找不到該任務，請重新輸入！")
 
-    # ────── 4. 查看所有任務 ──────
+    # 4. 查看所有任務
     elif choice == "4":
         clear()
         if not tasks:
@@ -213,7 +217,7 @@ while True:
             sorted_tasks = sorted(tasks, key=lambda x: int(x["id"]))
             display_tasks_table(sorted_tasks, "所有任務")
 
-    # ────── 5. 退出 ──────
+    # 5. 退出
     elif choice == "5":
         clear()
         print("謝謝使用！再見！")
