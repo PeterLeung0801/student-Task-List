@@ -77,16 +77,19 @@ Output: Program terminates.
 
 ## Invalid Test Cases
 
-1. ### Invalid Deadline Format
+### Invalid Deadline Format
 Input: 1 → task name → 2025-13-18
+***
 Output: 日期格式錯誤！請使用 YYYY-MM-DD 格式
 
-2. ### Invalid Task ID
+### Invalid Task ID
 Input: 2 or 3 → invalid ID (e.g., abc or nonexistent)
+***
 Output: 找不到該任務或已完成，請重新輸入！ (loops until valid or Enter)
 
-3. ### Invalid Menu Choice
+### Invalid Menu Choice
 Input: invalid number in main menu (e.g., 6) or edit menu (e.g., 5)
+***
 Output: 請輸入 1-5 的數字！ 或 請輸入 1-4 的數字
 
 ## Notes
@@ -98,6 +101,6 @@ Clearing the screen on each menu ensures a clean interface.
 Users can retry entering task IDs if invalid.
 All updates (add, complete, edit, delete) are immediately saved and displayed in table format.
 
----
+***
 
 ### Last Updated: November 23, 2025
