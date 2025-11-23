@@ -45,51 +45,59 @@ Invalid inputs prompt retry until valid or cancel with Enter.
 
 1. Add Task
 Input: 1 → COMP8080SEF Final Project → 2025-11-29
+<br>
 Output: Table displaying the newly added task.
 
 2. View All Tasks
 Input: 4
+<br>
 Output: Table of all tasks, sorted by ID.
 
 3. Complete Task
 Input: 2 → select task ID (e.g., 002)
+<br>
 Output: Table showing task marked as completed.
 
 4. Edit Task Name
 Input: 3 → task ID (e.g., 002) → 1 → new name
+<br>
 Output: Table showing updated task name.
 
 5. Edit Task Deadline
 Input: 3 → task ID → 2 → new date
+<br>
 Output: Table showing updated deadline.
 
 6. Delete Task
 Input: 3 → task ID → 3 → confirm y
+<br>
 Output: Table confirming deletion.
 
 7. Cancel Edit
 Input: 3 → task ID → 4 or Enter
+<br>
 Output: Returns to main menu.
 
 8. Exit Program
 Input: 5
+<br>
 Output: Program terminates.
 
 ## Invalid Test Cases
 
 ### Invalid Deadline Format
 Input: 1 → task name → 2025-13-18
-***
+<br>
 Output: 日期格式錯誤！請使用 YYYY-MM-DD 格式
 
 ### Invalid Task ID
 Input: 2 or 3 → invalid ID (e.g., abc or nonexistent)
-***
+<br>
 Output: 找不到該任務或已完成，請重新輸入！ (loops until valid or Enter)
 
 ### Invalid Menu Choice
 Input: invalid number in main menu (e.g., 6) or edit menu (e.g., 5)
-***
+<br>
 Output: 請輸入 1-5 的數字！ 或 請輸入 1-4 的數字
 
 ## Notes
@@ -101,6 +109,6 @@ Clearing the screen on each menu ensures a clean interface.
 Users can retry entering task IDs if invalid.
 All updates (add, complete, edit, delete) are immediately saved and displayed in table format.
 
-***
+<br>
 
 ### Last Updated: November 23, 2025
