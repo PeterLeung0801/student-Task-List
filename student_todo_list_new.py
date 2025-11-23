@@ -9,71 +9,74 @@ TASKS_FILE = "tasks.json"
 
 # ================ 主程式開始 ================
 
-print("學生任務待辦 ")
+print("學生任務待辦清單")
 print("輸入數字選擇操作")
 print("日期格式示例：2025-12-31\n")
 
-# 1. 載入任務（如果檔案不存在就建立空清單）
+# 載入任務
 if os.path.exists(TASKS_FILE):
     with open(TASKS_FILE, "r", encoding="utf-8") as f:
         tasks = json.load(f)
 else:
     tasks = []
 
-# 顯示目前所有任務
+# 開頭顯示目前任務
 if len(tasks) == 0:
     print("清單中沒有任務")
 else:
     for task in tasks:
         print(f"{task['id']}. {task['task']}：{task['status']} (截止日期: {task['deadline']})")
 
-
-# ================ 任務待辦清單 ================
+# ================ 主選單 ================
 while True:
-    print("\n" + "="*30)
+    print("\n" + "="*40)
     print("任務待辦清單選單：")
     print("1. 新增任務")
     print("2. 標記完成")
     print("3. 編輯/刪除任務")
     print("4. 查看所有任務")
     print("5. 退出")
-    choice = input("請選擇 (1-5): ").strip()
+    choice = input("\n請選擇 (1-5): ").strip()
 
-    # 1. 新增任務
+    # ────── 1. 新增任務 ──────
     if choice == "1":
+        print("\n=== 新增任務 === （直接按 Enter 即可取消）")
+        
         name = input("輸入任務名稱：").strip()
-        if name == "":
-            print("錯誤：名稱不能空白！")
+        if name == "":                     # 留空就取消
+            print("已取消新增\n")
             continue
 
         while True:
             deadline = input("輸入截止日期 (YYYY-MM-DD)：").strip()
-            try:
-                datetime.strptime(deadline, "%Y-%m-%d")  # 驗證格式
+            if deadline == "":             # 留空就取消
+                print("已取消新增\n")
                 break
-            except:
-                print("錯誤：日期格式不正確，請用 YYYY-MM-DD")
 
-        # 產生新 ID（001, 002...）
-        if tasks:
-            last_id = max(int(t["id"]) for t in tasks)
-            new_id = f"{last_id + 1:03d}"
-        else:
-            new_id = "001"
+            try:
+                datetime.strptime(deadline, "%Y-%m-%d")
+                if tasks:
+                    last_id = max(int(t["id"]) for t in tasks)
+                    new_id = f"{last_id + 1:03d}"
+                else:
+                    new_id = "001"
 
-        # 新增任務
-        tasks.append({
-            "id": new_id,
-            "task": name,
-            "deadline": deadline,
-            "status": "未完成"
-        })
+                tasks.append({
+                    "id": new_id,
+                    "task": name,
+                    "deadline": deadline,
+                    "status": "未完成"
+                })
 
-        # 存檔
-        with open(TASKS_FILE, "w", encoding="utf-8") as f:
-            json.dump(tasks, f, ensure_ascii=False, indent=4)
+                with open(TASKS_FILE, "w", encoding="utf-8") as f:
+                    json.dump(tasks, f, ensure_ascii=False, indent=4)
 
-        print(f"任務已新增！編號：{new_id}")
+                print(f"\n任務新增成功！")
+                print(f"編號：{new_id}｜名稱：{name}｜截止：{deadline}\n")
+                break
+
+            except ValueError:
+                print("日期格式錯誤！請使用 YYYY-MM-DD 格式")
 
     # 2. 標記完成
     elif choice == "2":
@@ -86,7 +89,11 @@ while True:
         for t in pending:
             print(f"{t['id']}. {t['task']} (截止: {t['deadline']})")
 
-        tid = input("\n輸入要完成的任務編號：").strip()
+        tid = input("\n輸入要完成的任務編號（直接按 Enter 取消）：").strip()
+        if tid == "":                      # 留空就取消
+            print("已取消操作\n")
+            continue
+
         found = False
         for task in tasks:
             if task["id"] == tid and task["status"] == "未完成":
@@ -107,15 +114,14 @@ while True:
             print("目前沒有任務可編輯")
             continue
 
-        # 先顯示所有任務
         for task in tasks:
             print(f"{task['id']}. {task['task']}：{task['status']} (截止日期: {task['deadline']})")
 
-        tid = input("\n輸入要編輯的任務編號（或輸入 exit 取消）：").strip()
-        if tid.lower() == "exit":
+        tid = input("\n輸入要編輯的任務編號（直接按 Enter 取消）：").strip()
+        if tid == "":                      # 留空就取消
+            print("已取消操作\n")
             continue
 
-        # 找任務
         target_task = None
         for task in tasks:
             if task["id"] == tid:
@@ -132,18 +138,23 @@ while True:
         print("3. 刪除此任務")
         print("4. 取消")
         edit_opt = input("選擇 (1-4): ").strip()
+        if edit_opt == "":                 # 留空也視為取消
+            edit_opt = "4"
 
         if edit_opt == "1":
             new_name = input("輸入新名稱：").strip()
-            if new_name != "":
+            if new_name == "":             # 留空就取消修改
+                print("未修改名稱")
+            else:
                 target_task["task"] = new_name
                 print("名稱已更新")
-            else:
-                print("名稱不能空白，已取消")
 
         elif edit_opt == "2":
             while True:
-                new_date = input("輸入新截止日期 (YYYY-MM-DD)：").strip()
+                new_date = input("輸入新截止日期 (YYYY-MM-DD)（留空取消）：").strip()
+                if new_date == "":         # 留空就取消
+                    print("未修改日期")
+                    break
                 try:
                     datetime.strptime(new_date, "%Y-%m-%d")
                     target_task["deadline"] = new_date
@@ -155,15 +166,16 @@ while True:
         elif edit_opt == "3":
             confirm = input("確定要刪除？(y/n): ").strip().lower()
             if confirm == "y" or confirm == "yes":
-                tasks = [t for t in tasks if t["id"] != tid]  # 移除該任務
+                tasks = [t for t in tasks if t["id"] != tid]
                 print("任務已刪除")
+            else:
+                print("已取消刪除")
 
-        elif edit_opt == "4":
+        elif edit_opt == "4" or edit_opt == "":
             print("已取消編輯")
         else:
             print("選項錯誤")
 
-        # 任何修改後都要存檔
         if edit_opt in ["1", "2", "3"] and edit_opt != "4":
             with open(TASKS_FILE, "w", encoding="utf-8") as f:
                 json.dump(tasks, f, ensure_ascii=False, indent=4)
