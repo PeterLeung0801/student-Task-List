@@ -1,5 +1,7 @@
 # Student Task To-Do List System - README
 
+<br>
+
 ## Project Overview
 
 This Python program helps students track tasks such as homework, assignments, and exam preparation. It provides a centralized task management system with a clear table display, enabling users to add, complete, edit, delete, and view tasks conveniently.
@@ -10,11 +12,15 @@ Newly added, completed, or edited tasks are immediately saved and displayed.
 Supports input validation and retry for invalid IDs or dates.
 Automatic tasks.json file creation and persistence.
 
+<br>
+
 ## Requirements
 
 Python 3.6.5 or above
 Standard Python modules: json, os, datetime
 Runs on Windows, macOS, or Linux terminals
+
+<br>
 
 ## How to Run
 
@@ -40,6 +46,8 @@ Runs on Windows, macOS, or Linux terminals
 Enter your choice (1-5).
 Tables are displayed for all task lists.
 Invalid inputs prompt retry until valid or cancel with Enter.
+
+<br>
 
 ## Test Cases
 
@@ -83,6 +91,8 @@ Input: 5
 <br>
 Output: Program terminates.
 
+<br>
+
 ## Invalid Test Cases
 
 ### Invalid Deadline Format
@@ -99,6 +109,8 @@ Output: 找不到該任務或已完成，請重新輸入！ (loops until valid o
 Input: invalid number in main menu (e.g., 6) or edit menu (e.g., 5)
 <br>
 Output: 請輸入 1-5 的數字！ 或 請輸入 1-4 的數字
+
+<br>
 
 ## Notes
 
