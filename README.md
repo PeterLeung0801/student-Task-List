@@ -36,7 +36,9 @@ python student_todo_list.py
 ### Option 2: Run Instantly on Replit (Recommended for classmates & teachers)
 1. Just click the button below and the project opens instantly in your browser:
 ![Run on Replit](https://replit.com/badge/github/leungkamchung/student-todo-list)
-2. Or simply copy the complete code into a new Replit Python project and press Run.  
+2. Or simply copy the complete code into a new Replit Python project and press Run. 
+
+<br>
 
 ---
 
