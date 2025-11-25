@@ -30,7 +30,7 @@ def display_tasks_table(tasks, title="任務列表"):
 
     print("═" * 90 + "\n")
 
-# ================ 取得下一個任務編號（不用 lambda）===============
+# ================ 取得下一個任務編號 ===============
 def get_next_id(tasks):
     if not tasks:                     # 沒有任務時回傳 001
         return "001"
@@ -138,18 +138,18 @@ while True:
                 break  # 取消就跳出
 
             # 嘗試找到任務
-            found = False
+            found_task = None
             for task in pending:
                 if task["id"] == tid:
                     task["status"] = "已完成"
-                    found = True
+                    found_task = task
                     break
 
-            if found:
+            if found_task:
                 with open(TASKS_FILE, "w", encoding="utf-8") as f:
                     json.dump(tasks, f, ensure_ascii=False, indent=4)
                 print(f"\n任務 {tid} 已標記為完成！\n")
-                display_tasks_table([task], "已更新任務")
+                display_tasks_table([found_task], "已更新任務")
                 break
             else:
                 clear()
@@ -240,7 +240,7 @@ while True:
         if not tasks:
             print("清單中沒有任務")
         else:
-            # 氣泡排序（最基礎的排序方式，沒用 sorted() + lambda）
+            # 編號排序
             sorted_tasks = tasks[:]  # 複製一份
             n = len(sorted_tasks)
             for i in range(n):
