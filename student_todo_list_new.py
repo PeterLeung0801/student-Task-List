@@ -30,6 +30,19 @@ def display_tasks_table(tasks, title="任務列表"):
 
     print("═" * 90 + "\n")
 
+# ================ 取得下一個任務編號（不用 lambda）===============
+def get_next_id(tasks):
+    if not tasks:                     # 沒有任務時回傳 001
+        return "001"
+    
+    max_id = 0
+    for t in tasks:
+        current_id = int(t["id"])     # 把字串轉成整數
+        if current_id > max_id:
+            max_id = current_id
+    next_id = max_id + 1
+    return f"{next_id:03d}"           # 補零成三位數，例如 001、012
+
 # ================ 主程式 ================
 clear()
 print("═" * 58)
@@ -44,10 +57,13 @@ else:
     tasks = []
 
 # 開頭顯示最近一次任務
-if len(tasks) == 0:
+if not tasks:
     print("清單中沒有任務")
 else:
-    latest_task = max(tasks, key=lambda x: int(x["id"]))
+    latest_task = tasks[0]
+    for t in tasks:
+        if int(t["id"]) > int(latest_task["id"]):
+            latest_task = t
     display_tasks_table([latest_task], "最近一次任務")
 
 # ================ 主選單 ================
@@ -82,12 +98,7 @@ while True:
 
             try:
                 datetime.strptime(deadline, "%Y-%m-%d")
-
-                if tasks:
-                    last_id = max(int(t["id"]) for t in tasks)
-                    new_id = f"{last_id + 1:03d}"
-                else:
-                    new_id = "001"
+                new_id = get_next_id(tasks)
 
                 new_task = {
                     "id": new_id,
@@ -110,7 +121,11 @@ while True:
     # 2. 標記完成
     elif choice == "2":
         clear()
-        pending = [t for t in tasks if t["status"] == "未完成"]
+        pending = []
+        for t in tasks:
+            if t["status"] == "未完成":
+                pending.append(t)
+
         if not pending:
             print("沒有未完成的任務！")
             continue
@@ -123,18 +138,18 @@ while True:
                 break  # 取消就跳出
 
             # 嘗試找到任務
-            target_task = None
+            found = False
             for task in pending:
                 if task["id"] == tid:
-                    target_task = task
+                    task["status"] = "已完成"
+                    found = True
                     break
 
-            if target_task:
-                target_task["status"] = "已完成"
+            if found:
                 with open(TASKS_FILE, "w", encoding="utf-8") as f:
                     json.dump(tasks, f, ensure_ascii=False, indent=4)
                 print(f"\n任務 {tid} 已標記為完成！\n")
-                display_tasks_table([target_task], "已更新任務")
+                display_tasks_table([task], "已更新任務")
                 break
             else:
                 clear()
@@ -169,13 +184,15 @@ while True:
                 print("3. 刪除此任務")
                 print("4. 取消")
                 edit_opt = input("選擇 (1-4)：").strip()
+
                 if edit_opt == "1":
                     new_name = input("輸入新名稱（留空取消）：").strip()
-                    if new_name == "":
-                        print("未修改名稱")
-                    else:
+                    if new_name:
                         target_task["task"] = new_name
                         print("名稱已更新")
+                    else:
+                        print("未修改名稱")
+
                 elif edit_opt == "2":
                     while True:
                         new_date = input("輸入新截止日期 (YYYY-MM-DD)（留空取消）：").strip()
@@ -189,21 +206,30 @@ while True:
                             break
                         except:
                             print("日期格式錯誤，請重新輸入")
+
                 elif edit_opt == "3":
                     confirm = input("確定要刪除？(y/n)：").strip().lower()
                     if confirm in ["y", "yes"]:
-                        tasks = [t for t in tasks if t["id"] != tid]
+                        new_tasks = []
+                        for t in tasks:
+                            if t["id"] != tid:
+                                new_tasks.append(t)
+                        tasks = new_tasks
                         print("任務已刪除")
                     else:
                         print("已取消刪除")
-                elif edit_opt == "4" or edit_opt == "":
+
+                elif edit_opt in ["4", ""]:
                     print("已取消編輯")
+
                 else:
                     print("選項錯誤")
 
+                # 儲存檔案
                 with open(TASKS_FILE, "w", encoding="utf-8") as f:
                     json.dump(tasks, f, ensure_ascii=False, indent=4)
                 break
+
             else:
                 clear()
                 print("找不到該任務，請重新輸入！")
@@ -214,8 +240,14 @@ while True:
         if not tasks:
             print("清單中沒有任務")
         else:
-            sorted_tasks = sorted(tasks, key=lambda x: int(x["id"]))
-            display_tasks_table(sorted_tasks, "所有任務")
+            # 氣泡排序（最基礎的排序方式，沒用 sorted() + lambda）
+            sorted_tasks = tasks[:]  # 複製一份
+            n = len(sorted_tasks)
+            for i in range(n):
+                for j in range(0, n-i-1):
+                    if int(sorted_tasks[j]["id"]) > int(sorted_tasks[j+1]["id"]):
+                        sorted_tasks[j], sorted_tasks[j+1] = sorted_tasks[j+1], sorted_tasks[j]
+            display_tasks_table(sorted_tasks, "所有任務（按編號排序）")
 
     # 5. 退出
     elif choice == "5":
