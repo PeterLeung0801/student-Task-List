@@ -25,18 +25,18 @@ Runs on Windows, macOS, or Linux terminals
 ## How to Run
 
 ### Option 1: Run Locally
-### 1. Save the code as student_todo_list.py  
-### 2. Place tasks.json in the same folder (it will be created automatically if it doesn’t exist)  
-### 3. Open a terminal and run:  bash
+1. Save the code as student_todo_list.py  
+2. Place tasks.json in the same folder (it will be created automatically if it doesn’t exist)  
+3. Open a terminal and run:  bash
 
 python student_todo_list.py
 
 <br>
 
 ### Option 2: Run Instantly on Replit (Recommended for classmates & teachers)
-### 1. Just click the button below and the project opens instantly in your browser:
+1. Just click the button below and the project opens instantly in your browser:
 ![Run on Replit](https://replit.com/badge/github/leungkamchung/student-todo-list)
-### 2. Or simply copy the complete code into a new Replit Python project and press Run.  
+2. Or simply copy the complete code into a new Replit Python project and press Run.  
 
 ---
 
