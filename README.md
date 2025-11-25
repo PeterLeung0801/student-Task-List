@@ -25,11 +25,9 @@ Runs on Windows, macOS, or Linux terminals
 ## How to Run
 
 ### Option 1: Run Locally
-1. Save the code as student_todo_list.py  
+1. Save the code as student_todo_list_new.py  
 2. Place tasks.json in the same folder (it will be created automatically if it doesn’t exist)  
 3. Open a terminal and run:  bash
-
-python student_todo_list.py
 
 <br>
 
